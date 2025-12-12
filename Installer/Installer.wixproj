@@ -1,0 +1,12 @@
+<Project Sdk="WixToolset.Sdk/6.0.2">
+  <PropertyGroup>
+    <OutputType>Package</OutputType>
+    <OutputName>CascadeWindowsSetup</OutputName>
+    <Platform>x64</Platform>
+    <InstallerVersion>500</InstallerVersion>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="WixToolset.UI.wixext" Version="6.0.2" />
+  </ItemGroup>
+</Project>
