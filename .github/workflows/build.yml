@@ -1,0 +1,62 @@
+name: Build Cascade Windows
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-app:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore CascadeWindows/CascadeWindows.csproj
+    
+    - name: Build application
+      run: dotnet build CascadeWindows/CascadeWindows.csproj -c Release --no-restore
+    
+    - name: Publish application
+      run: dotnet publish CascadeWindows/CascadeWindows.csproj -c Release -r win-x64 --self-contained false --no-build
+    
+    - name: Upload application artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: CascadeWindows-Executable
+        path: CascadeWindows/bin/Release/net8.0-windows/win-x64/CascadeWindows.exe
+
+  build-installer:
+    runs-on: windows-latest
+    needs: build-app
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    
+    - name: Install WiX
+      run: dotnet tool install --global wix
+    
+    - name: Build application (required for installer)
+      run: dotnet publish CascadeWindows/CascadeWindows.csproj -c Release -r win-x64 --self-contained false
+    
+    - name: Build installer
+      run: dotnet build Installer/Installer.wixproj -c Release
+    
+    - name: Upload installer artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: CascadeWindows-Installer
+        path: Installer/bin/x64/Release/*.msi
