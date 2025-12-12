@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+  <Package Name="Cascade Windows" 
+           Version="1.0.0" 
+           Manufacturer="CascadeWindows" 
+           UpgradeCode="B8F3D6E5-7C4A-4B2E-9F1D-3A8E5C6D7F9A"
+           Language="1033"
+           Codepage="1252">
+    
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Standard program files directory for x64 -->
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="CascadeWindows">
+        <Component Id="CascadeWindowsExe" Bitness="always64">
+          <File Id="CascadeWindowsExeFile" 
+                Source="../CascadeWindows/bin/Release/net8.0-windows/win-x64/CascadeWindows.exe" 
+                KeyPath="yes" />
+          
+          <File Id="CascadeWindowsDll" 
+                Source="../CascadeWindows/bin/Release/net8.0-windows/win-x64/CascadeWindows.dll" />
+          
+          <File Id="CascadeWindowsRuntimeConfig" 
+                Source="../CascadeWindows/bin/Release/net8.0-windows/win-x64/CascadeWindows.runtimeconfig.json" />
+                
+          <File Id="CascadeWindowsDepsJson" 
+                Source="../CascadeWindows/bin/Release/net8.0-windows/win-x64/CascadeWindows.deps.json" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <!-- Add context menu entry for Desktop -->
+    <Component Id="DesktopContextMenu" Directory="INSTALLFOLDER" Bitness="always64">
+      <RegistryKey Root="HKCR" Key="Directory\Background\shell\CascadeWindows">
+        <RegistryValue Type="string" Value="Cascade Windows" />
+        <RegistryValue Type="string" Name="Icon" Value="[INSTALLFOLDER]CascadeWindows.exe" />
+      </RegistryKey>
+      <RegistryKey Root="HKCR" Key="Directory\Background\shell\CascadeWindows\command">
+        <RegistryValue Type="string" Value='"[INSTALLFOLDER]CascadeWindows.exe"' />
+      </RegistryKey>
+    </Component>
+
+    <Feature Id="ProductFeature" Title="Cascade Windows" Level="1">
+      <ComponentRef Id="CascadeWindowsExe" />
+      <ComponentRef Id="DesktopContextMenu" />
+    </Feature>
+
+    <!-- Use WixUI for installer interface -->
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+    <ui:WixUI Id="WixUI_Minimal" />
+  </Package>
+</Wix>
