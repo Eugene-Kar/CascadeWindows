@@ -81,6 +81,14 @@ static class Program
         int windowWidth = workingArea.Width * 3 / 4; // 75% of screen width
         int windowHeight = workingArea.Height * 3 / 4; // 75% of screen height
 
+        // Ensure window dimensions are reasonable
+        windowWidth = Math.Max(400, Math.Min(windowWidth, workingArea.Width - offsetX));
+        windowHeight = Math.Max(300, Math.Min(windowHeight, workingArea.Height - offsetY));
+
+        // Calculate maximum offsets to prevent windows from going off-screen
+        int maxOffsetX = Math.Max(0, workingArea.Width - windowWidth);
+        int maxOffsetY = Math.Max(0, workingArea.Height - windowHeight);
+
         // Cascade windows
         for (int i = 0; i < windows.Count; i++)
         {
@@ -92,9 +100,9 @@ static class Program
                 ShowWindow(hWnd, SW_RESTORE);
             }
 
-            // Calculate position
-            int x = workingArea.Left + (i * offsetX) % (workingArea.Width - windowWidth);
-            int y = workingArea.Top + (i * offsetY) % (workingArea.Height - windowHeight);
+            // Calculate position with safe modulo operation
+            int x = workingArea.Left + (maxOffsetX > 0 ? (i * offsetX) % maxOffsetX : 0);
+            int y = workingArea.Top + (maxOffsetY > 0 ? (i * offsetY) % maxOffsetY : 0);
 
             // Set window position and size
             SetWindowPos(hWnd, IntPtr.Zero, x, y, windowWidth, windowHeight, SWP_NOZORDER);

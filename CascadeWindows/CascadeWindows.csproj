@@ -12,7 +12,7 @@
     <Version>1.0.0</Version>
     <Company>CascadeWindows</Company>
     <Product>Cascade Windows</Product>
-    <Copyright>Copyright © 2025</Copyright>
+    <Copyright>Copyright © 2025 - Licensed under GPL v3</Copyright>
     <Description>Cascade all open windows on the desktop</Description>
   </PropertyGroup>
 

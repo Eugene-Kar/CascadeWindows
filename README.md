@@ -80,7 +80,9 @@ Or use Control Panel → Programs → Uninstall a program
 - **Registry Entry**: `HKCR\Directory\Background\shell\CascadeWindows`
 
 ## License
-MIT License - See [LICENSE](LICENSE) file for details
+GNU General Public License v3.0 - See [LICENSE](LICENSE) file for details
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
 ## Contributing
 Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
