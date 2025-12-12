@@ -72,7 +72,13 @@ static class Program
         }, IntPtr.Zero);
 
         // Get screen work area
-        Screen primaryScreen = Screen.PrimaryScreen!;
+        Screen? primaryScreen = Screen.PrimaryScreen;
+        if (primaryScreen == null)
+        {
+            // No primary screen detected, cannot cascade windows
+            return;
+        }
+        
         Rectangle workingArea = primaryScreen.WorkingArea;
 
         // Calculate cascade parameters
