@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
   <Package Name="Cascade Windows" 
            Version="1.0.0" 
            Manufacturer="CascadeWindows" 
@@ -49,6 +50,6 @@
 
     <!-- Use WixUI for installer interface -->
     <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
-    <ui:WixUI Id="WixUI_Minimal" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui" />
+    <ui:WixUI Id="WixUI_Minimal" />
   </Package>
 </Wix>

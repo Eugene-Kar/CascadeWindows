@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Build script for Cascade Windows (cross-platform development)
 # Note: Full installer build requires Windows
 
